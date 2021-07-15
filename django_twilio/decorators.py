@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import (
     HttpRequest, HttpResponse, HttpResponseForbidden, HttpResponseNotAllowed)
 
-from twilio.twiml import Verb
+from twilio.twiml import TwiML
 from twilio.util import RequestValidator
 
 from .settings import TWILIO_AUTH_TOKEN
@@ -116,7 +116,7 @@ def twilio_view(f):
 
         if isinstance(response, (text_type, bytes)):
             return HttpResponse(response, content_type='application/xml')
-        elif isinstance(response, Verb):
+        elif isinstance(response, TwiML):
             return HttpResponse(str(response), content_type='application/xml')
         else:
             return response
